@@ -6,54 +6,28 @@
  * @flow
  */
 
-import React, {useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Button,
-} from 'react-native';
+// import React, { useState } from 'react';
+// import Routes from './Routes';
 
-import {
-  Colors,
-} from 'react-native/Libraries/NewAppScreen';
+// class App extends React.Component {
+  
+//   render() {
+//     return (
+//       <Routes/>
+//     );
+//   }
+// }
 
-function App () {
-    const [count,setCount]= useState(0);
+// export default App;
 
-    return (
-      <View style={styles.sectionContainer}>
-        <Text style={styles.sectionTitle}>You clicked {count} times</Text>
-        <Button style={styles.button}
-            onPress={() => {
-            setCount( count + 1 )}}
-            title="Press Me"
-          />
 
-        <Button 
-        title="Go to Home" 
-       /> 
-      </View>
-    );
-   }
+import React from 'react';
+import Routes from './Routes';
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 100,
-    paddingHorizontal: 24,
-    alignSelf: "center",
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  button: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-});
+const App = () => {
+  return (
+    <Routes />
+  );
+};
 
 export default App;
