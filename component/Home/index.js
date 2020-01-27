@@ -18,9 +18,8 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
-function App () {
-const [count,setCount]= useState(0);
-
+function Home () {
+    const [count,setCount]= useState(0);   
     return (
       <View style={styles.sectionContainer}>
         <Text style={styles.sectionTitle}>You clicked {count} times</Text>
@@ -29,7 +28,7 @@ const [count,setCount]= useState(0);
             setCount( count + 1 )}}
             title="Press Me"
           />
-      </View>
+          </View>
     );
    }
 
@@ -52,4 +51,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default Home;
