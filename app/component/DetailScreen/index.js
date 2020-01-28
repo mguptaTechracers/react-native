@@ -6,7 +6,7 @@
  * @flow
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     StyleSheet,
     View,
@@ -18,29 +18,24 @@ import {
     Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
-class Detail extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = { count: 0 }
-    }
+import { useNavigation } from '@react-navigation/native';
+import { useFriendStatus } from '../../useFriendStatus';
 
-    onPressOnGoBack() {
-        const { goBack } = this.props.navigation;
-        goBack('home');
+function Detail() {
+    const navigation = useNavigation();
+    const isOnline = useFriendStatus(123);
+    function onPressOnGoBack() {
+        navigation.goBack();
     }
-
-    render() {
-        const { goBack } = this.props.navigation;
-        return (
-            <View style={styles.sectionContainer} >
-                <Text style={styles.sectionTitle}>This is Detail Screen</Text>
-                <Button
-                    title="Go Back "
-                    onPress={() => goBack()}
-                />
-            </View>
-        );
-    }
+    return (
+        <View style={styles.sectionContainer}>
+            <Text style={[{ color: isOnline ? '#198962' : '#3E4341' }, styles.sectionTitle]}> Alias </Text>
+            <Button style={styles.button}
+                title="Go Back"
+                onPress={() => onPressOnGoBack()}
+            />
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -52,7 +47,7 @@ const styles = StyleSheet.create({
     sectionTitle: {
         fontSize: 24,
         fontWeight: '600',
-        color: Colors.black,
+        alignSelf: "center",
     },
     button: {
         marginTop: 8,
