@@ -6,7 +6,7 @@
  * @flow
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -18,69 +18,63 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
-class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      count: 0,
-      timer: 100,
+import { useNavigation } from '@react-navigation/native';
+
+function HomeScreen() {
+  // be careful to never call useNavigation in the press callback. Call hooks directly from the render function!
+  // const { navigate } = useNavigation();
+  const [count, setCount] = useState(0);
+  const [timer, setTimer] = useState(1);
+  let interval = null;
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    interval = setInterval(() => {
+      setTimer(timer => timer + 1);
+    }, 1000);
+
+    // Specify how to clean up after this effect:
+    // this will clearInterval when component unmont like in ComponentWillUnmount
+
+    return function cleanup() {
+      console.log("================= cleanup ===========")
+      console.log("=================  clearInterval ===========")
+      clearInterval(interval);
+      setTimer(1);
     };
+  }, []);
+
+  function reset() {
+    clearInterval(interval);
+    setTimer(1);
   }
 
-  componentDidMount() {
-    this.interval = setInterval(
-      () => this.setState((prevState) => ({ timer: prevState.timer - 1 })),
-      1000
-    );
+  function onPressGoToHomeButton() {
+    navigation.replace('login');
   }
 
-  componentDidUpdate() {
-    if (this.state.timer === 1) {
-      clearInterval(this.interval);
-    }
-  }
+  return (
+    <View style={styles.sectionContainer}>
+      <Text style={styles.sectionTitle}>You clicked {count} times</Text>
+      <Button style={styles.button}
+        onPress={() => {
+          setCount(count + 1)
+        }}
+        title="Press Me"
+      />
+      <Button style={styles.homeButton}
+        title="Go to Login"
+        onPress={() => onPressGoToHomeButton()}
+      />
 
-  componentWillUnmount() {
-    console.log("================= componentWillUnmount ===========")
-    console.log("=================  clearInterval ===========")
+      <Text> Time remaining {timer} seconds </Text>
+      <Button
+        title="Reset Timer "
+        onPress={() => reset()}
+      />
 
-    clearInterval(this.interval);
-    this.setState({ timer: 1 });
-  }
-
-  reset() {
-    clearInterval(this.interval);
-    this.setState({ timer: 100 });
-  }
-
-  onPressGoToHomeButton() {
-    this.props.navigation.replace('login');
-  }
-
-  render() {
-    return (
-      <View style={styles.sectionContainer}>
-        <Text style={styles.sectionTitle}>You clicked {this.state.count} times</Text>
-        <Button style={styles.button}
-          onPress={() => {
-            this.setState({ count: this.state.count + 1 })
-          }}
-          title="Press Me"
-        />
-        <Button style={styles.homeButton}
-          title="Go to Login"
-          onPress={() => this.onPressGoToHomeButton()}
-        />
-
-        <Text> Time remaining {this.state.timer} seconds </Text>
-        <Button
-          title="Reset Timer "
-          onPress={() => this.reset()}
-        />
-
-      </View>
-    );
-  }
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -107,5 +101,5 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Home;
+export default HomeScreen;
 

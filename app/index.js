@@ -1,3 +1,12 @@
+import React from 'react';
+import LoginScreen from "./component/LoginScreen";
+import HomeScreen from "./component/HomeScreen";
+import DetailScreen from "./component/DetailScreen";
+
+
+import { NavigationNativeContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -6,28 +15,19 @@
  * @flow
  */
 
-// import React, { useState } from 'react';
-// import Routes from './Routes';
+const Stack = createStackNavigator();
 
-// class App extends React.Component {
-  
-//   render() {
-//     return (
-//       <Routes/>
-//     );
-//   }
-// }
-
-// export default App;
-
-
-import React from 'react';
-import Routes from './Routes';
-
-const App = () => {
+function App() {
   return (
-    <Routes />
+    <NavigationNativeContainer>
+      <Stack.Navigator initialRouteName="home" headerMode= 'none'>
+        <Stack.Screen name="home" component={HomeScreen} />
+        <Stack.Screen name="login" component={LoginScreen} />
+        <Stack.Screen name="detail" component={DetailScreen} />
+      </Stack.Navigator>
+    </NavigationNativeContainer>
   );
-};
+}
 
 export default App;
+

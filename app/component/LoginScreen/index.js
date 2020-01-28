@@ -27,9 +27,6 @@ class Login extends React.Component {
     navigate('detail');
   }
 
-  onPressForgetPassButton() {
-    ToastAndroid.show('Clicked on Forget Password', ToastAndroid.show);
-  }
   render() {
     return (
       <View style={styles.container}>
@@ -77,8 +74,7 @@ class Login extends React.Component {
         </TouchableHighlight>
 
         <TouchableHighlight
-          style={styles.buttonContainer}
-          onPress={() => this.onPressForgetPassButton()}>
+          style={styles.buttonContainer}>
           <Text>Forgot your password?</Text>
         </TouchableHighlight>
 
